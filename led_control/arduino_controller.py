@@ -21,13 +21,13 @@ class ArduinoFirmataController(controller.LEDController):
     def set_state(self, coord_xy: Tuple[int, int], on: bool) -> None:
         if not self.can_handle(coord_xy):
             return
-        self._ensure_device_initialized()
+        self.ensure_device_initialized()
         assert self._initialized_device is not None, (
-            "_ensure_device_initialized() failed to set up device")
+            "ensure_device_initialized() failed to set up device")
         pin = self._pin_lookup[coord_xy]
         self._initialized_device.digital_write(pin, int(on))
 
-    def _ensure_device_initialized(self) -> None:
+    def ensure_device_initialized(self) -> None:
         if self._initialized_device is not None:
             return
 

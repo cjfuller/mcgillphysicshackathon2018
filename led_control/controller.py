@@ -16,3 +16,8 @@ class LEDController(metaclass=abc.ABCMeta):
         should not throw an exception.
         """
         pass
+
+    @abc.abstractmethod
+    def ensure_device_initialized(self) -> None:
+        """Make sure that any underlying device is ready to receive events."""
+        pass

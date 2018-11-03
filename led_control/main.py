@@ -2,20 +2,15 @@ import time
 
 import led_control.registry as registry
 
+
 test_series = [
-    (1, 15),
-    (1, 14),
-    (1, 13),
-    (1, 12),
-    (1, 11),
-    (2, 15),
-    (2, 14),
-    (2, 13),
-    (2, 12),
-    (2, 11),
+    (x, y)
+    for x in range(1, 5)
+    for y in range(15, 10, -1)
 ]
 
 def run_test_series():
+    registry.initialize()
     for coord in test_series:
         controller = registry.controller_for(coord)
         controller.set_state(coord, 1)

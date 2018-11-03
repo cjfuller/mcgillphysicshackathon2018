@@ -5,7 +5,7 @@ import led_control.controller as controller
 
 controllers = [
     ac.ArduinoFirmataController(
-        device='/dev/tty.usbmodem14501',
+        device='/dev/tty.usbmodem145401',
         coord_pin_mapping = {
             (1, 15): 2,
             (1, 14): 3,
@@ -17,6 +17,21 @@ controllers = [
             (2, 13): 9,
             (2, 12): 10,
             (2, 11): 11,
+            (3, 15): 12,
+            (3, 14): 13,
+        }
+    ),
+    ac.ArduinoFirmataController(
+        device='/dev/tty.usbmodem145301',
+        coord_pin_mapping = {
+            (3, 13): 2,
+            (3, 12): 3,
+            (3, 11): 4,
+            (4, 15): 5,
+            (4, 14): 6,
+            (4, 13): 7,
+            (4, 12): 8,
+            (4, 11): 9,
         }
     )
 ]
@@ -24,6 +39,10 @@ controllers = [
 # If we've already found a controller for a given pin, this caches that
 # controller, so that we don't have to do a linear time lookup.
 known_controller_map = {}
+
+def initialize() -> None:
+    for c in controllers:
+        c.ensure_device_initialized()
 
 def controller_for(
     coord_xy: Tuple[int, int]
