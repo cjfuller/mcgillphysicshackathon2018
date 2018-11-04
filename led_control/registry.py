@@ -3,9 +3,12 @@ from typing import Optional, Tuple
 import led_control.arduino_controller as ac
 import led_control.controller as controller
 
+def debug_hook(pin, state):
+    print(f'{pin} -> {state}')
+
 controllers = [
     ac.ArduinoFirmataController(
-        device='/dev/tty.usbmodem145401',
+        device='/dev/tty.usbmodem144401',
         coord_pin_mapping = {
             (1, 15): 2,
             (1, 14): 3,
@@ -22,7 +25,7 @@ controllers = [
         }
     ),
     ac.ArduinoFirmataController(
-        device='/dev/tty.usbmodem145301',
+        device='/dev/tty.usbmodem144301',
         coord_pin_mapping = {
             (3, 13): 2,
             (3, 12): 3,
@@ -32,8 +35,24 @@ controllers = [
             (4, 13): 7,
             (4, 12): 8,
             (4, 11): 9,
+            (5, 15): 10,
+            (5, 14): 11,
+            (5, 13): 12,
+            (5, 12): 13,
         }
-    )
+    ),
+    ac.ArduinoFirmataController(
+        device='/dev/tty.usbmodem144201',
+        coord_pin_mapping = {
+            (5, 11): 2,
+            (6, 15): 3,
+            (6, 14): 4,
+            (6, 13): 5,
+            (6, 12): 6,
+            (6, 11): 7,
+        },
+        hook_fn=debug_hook
+    ),
 ]
 
 # If we've already found a controller for a given pin, this caches that

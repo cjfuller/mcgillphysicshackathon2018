@@ -1,5 +1,5 @@
 import atexit
-from typing import Dict, Optional, Tuple
+from typing import Callable, Dict, Optional, Tuple
 
 import pymata_aio.pymata3 as pym
 import pymata_aio.constants as c
@@ -10,10 +10,14 @@ PinLookup = Dict[Tuple[int, int], str]
 
 class ArduinoFirmataController(controller.LEDController):
     """An LED controller that talks firmata to an arduino."""
-    def __init__(self, device: str, coord_pin_mapping: PinLookup):
+    def __init__(
+            self, device: str, coord_pin_mapping: PinLookup,
+            hook_fn: Optional[Callable[[int, int], None]] = None
+        ):
         self._pin_lookup = coord_pin_mapping
         self._device = device
         self._initialized_device: Optional[pym.PyMata3] = None
+        self._hook_fn = hook_fn
 
     def can_handle(self, coord_xy: Tuple[int, int]) -> bool:
         return coord_xy in self._pin_lookup
@@ -26,6 +30,8 @@ class ArduinoFirmataController(controller.LEDController):
             "ensure_device_initialized() failed to set up device")
         pin = self._pin_lookup[coord_xy]
         self._initialized_device.digital_write(pin, int(on))
+        if self._hook_fn:
+            self._hook_fn(pin, int(on))
 
     def ensure_device_initialized(self) -> None:
         if self._initialized_device is not None:
