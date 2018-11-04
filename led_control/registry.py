@@ -8,7 +8,7 @@ def debug_hook(pin, state):
 
 controllers = [
     ac.ArduinoFirmataController(
-        device='/dev/tty.usbmodem144401',
+        device='/dev/tty.usbmodem143401',
         coord_pin_mapping = {
             (1, 15): 2,
             (1, 14): 3,
@@ -25,7 +25,7 @@ controllers = [
         }
     ),
     ac.ArduinoFirmataController(
-        device='/dev/tty.usbmodem144301',
+        device='/dev/tty.usbmodem143301',
         coord_pin_mapping = {
             (3, 13): 2,
             (3, 12): 3,
@@ -42,7 +42,7 @@ controllers = [
         }
     ),
     ac.ArduinoFirmataController(
-        device='/dev/tty.usbmodem144201',
+        device='/dev/tty.usbmodem143201',
         coord_pin_mapping = {
             (5, 11): 2,
             (6, 15): 3,
@@ -50,6 +50,24 @@ controllers = [
             (6, 13): 5,
             (6, 12): 6,
             (6, 11): 7,
+        },
+        hook_fn=debug_hook
+    ),
+    ac.ArduinoFirmataController(
+        device='/dev/tty.usbmodem143101',
+        coord_pin_mapping = {
+            (7, 15): 2,
+            (7, 14): 3,
+            (7, 13): 4,
+            (7, 12): 5,
+            (7, 11): 6,
+            (8, 15): 7,
+            (8, 14): 8,
+            (8, 13): 9,
+            (8, 12): 11,
+            (8, 11): 10,
+            (9, 15): 12,
+            (9, 16): 13,
         },
         hook_fn=debug_hook
     ),
